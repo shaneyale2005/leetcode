@@ -1,3 +1,3 @@
-# [Leetcode](https://leetcode.cn/)
+# [leetcode](https://leetcode.cn/)
 
-为了面试刷Leetcode题目。
+为了面试刷leetcode题目
