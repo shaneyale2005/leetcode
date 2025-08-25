@@ -1,3 +1,7 @@
-# [leetcode](https://leetcode.cn/)
+# 🚀 [Leetcode](https://leetcode.cn/)
 
-为了面试刷leetcode题目
+Welcome to my Leetcode solutions! 
+
+Here you'll find my journey solving coding challenges, improving algorithms, and sharpening problem-solving skills.  
+
+Feel free to explore, learn, and contribute! 💡
