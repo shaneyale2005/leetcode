@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(GTest CONFIG REQUIRED)
 
 add_executable(test
-    bubble_sort.cpp
+    sort.cpp
     test.cpp
 )
 
