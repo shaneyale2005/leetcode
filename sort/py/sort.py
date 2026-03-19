@@ -1,3 +1,7 @@
+"""
+Source code for all kinds of sorting algorithms.
+"""
+
 def bubble_sort(nums):
     n = len(nums)
     for i in range(n - 1):
