@@ -25,8 +25,22 @@ def insertion_sort(nums):
     for i in range(1, n):
         key = nums[i]
         j = i - 1
-        while j >= 0 and key < nums[j]:
+        while j >= 0 and nums[j] > key:
             nums[j + 1] = nums[j]
             j -= 1
         nums[j + 1] = key
+    return nums
+
+def shell_sort(nums):
+    n = len(nums)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            temp = nums[i]
+            j = i
+            while j >= gap and nums[j - gap] > temp:
+                nums[j] = nums[j - gap]
+                j -= gap
+            nums[j] = temp
+        gap = gap // 2
     return nums

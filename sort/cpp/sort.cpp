@@ -53,3 +53,18 @@ void insertion_sort(std::vector<int> &v) {
         v[j + 1] = key;
     }
 }
+
+void shell_sort(std::vector<int> &v) {
+    int n = v.size();
+    for (int gap = n / 2; gap > 0; gap /= 2) {
+        for (int i = gap; i < n; i++) {
+            int temp = v[i];
+            int j = i;
+            while (j >= gap && v[j - gap] > temp) {
+                v[j] = v[j - gap];
+                j -= gap;
+            }
+            v[j] = temp;
+        }
+    }
+}
