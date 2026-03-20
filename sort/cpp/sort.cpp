@@ -68,3 +68,19 @@ void shell_sort(std::vector<int> &v) {
         }
     }
 }
+
+void merge_sort(std::vector<int> &v) {
+    int n = v.size();
+
+    if (n <= 1) {
+        return;
+    }
+
+    int mid = n / 2;
+    std::vector<int> left(v.begin(), v.begin() + mid);
+    std::vector<int> right(v.begin() + mid, v.end());
+
+    merge_sort(left);
+    merge_sort(right);
+    std::merge(left.begin(), left.end(), right.begin(), right.end(), v.begin());
+}

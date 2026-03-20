@@ -44,3 +44,30 @@ def shell_sort(nums):
             nums[j] = temp
         gap = gap // 2
     return nums
+
+def merge_sort(nums):
+    """
+    归并排序，核心的思想是分而治之，这里用递归来实现
+    """
+    n = len(nums)
+    if n <= 1:
+        return nums
+    
+    mid = n // 2
+    left = merge_sort(nums[:mid])
+    right = merge_sort(nums[mid:])
+
+    def merge(left, right):
+        res = []
+        i = j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                res.append(left[i])
+                i += 1
+            else:
+                res.append(right[j])
+                j += 1
+            
+        return res + left[i:] + right[j:]
+
+    return merge(left, right)
