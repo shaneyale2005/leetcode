@@ -2,7 +2,7 @@ import unittest
 import random
 from collections import Counter
 
-from sort import bubble_sort, selection_sort, insertion_sort, shell_sort
+from sort import bubble_sort, selection_sort, insertion_sort, shell_sort, merge_sort
 
 random.seed(42)
 
@@ -560,6 +560,53 @@ class TestShellSort(unittest.TestCase):
 
     def test_randomized_against_builtin_sorted(self):
         rng = random.Random(987654321)
+        for case_id in range(300):
+            size = rng.randint(0, 128)
+            nums = [rng.randint(-1000, 1000) for _ in range(size)]
+            with self.subTest(case_id=case_id):
+                self.assert_matches_python_sort(nums)
+
+
+class TestMergeSort(unittest.TestCase):
+    def assert_matches_python_sort(self, nums):
+        input_data = nums.copy()
+        result = merge_sort(input_data)
+        expected = sorted(nums)
+        self.assertEqual(result, expected, msg=f"input={nums}")
+
+    def test_boundary_and_pattern_cases(self):
+        test_inputs = [
+            [],
+            [42],
+            [1, 2, 3, 4, 5],
+            [5, 4, 3, 2, 1],
+            [3, -1, 2, -1, 3, 0, 2, -5],
+            [0, (2**31) - 1, -1, -(2**31), 42, (2**31) - 1, -(2**31)],
+        ]
+        for case in test_inputs:
+            with self.subTest(input=case):
+                self.assert_matches_python_sort(case)
+
+    def test_preserves_multiset(self):
+        nums = [5, 1, 5, 2, 9, 2, 2, -7, -7, 0]
+        result = merge_sort(nums.copy())
+        self.assertEqual(Counter(nums), Counter(result))
+        self.assertEqual(result, sorted(nums))
+
+    def test_idempotent(self):
+        nums = [4, 1, 3, 2, 3, 1, 0, -2]
+        once_sorted = merge_sort(nums.copy())
+        twice_sorted = merge_sort(once_sorted.copy())
+        self.assertEqual(twice_sorted, once_sorted)
+
+    def test_does_not_modify_input(self):
+        nums = [9, 4, 1, 7, 3]
+        original = nums.copy()
+        _ = merge_sort(nums)
+        self.assertEqual(nums, original)
+
+    def test_randomized_against_builtin_sorted(self):
+        rng = random.Random(42424242)
         for case_id in range(300):
             size = rng.randint(0, 128)
             nums = [rng.randint(-1000, 1000) for _ in range(size)]

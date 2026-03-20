@@ -11,6 +11,7 @@ void bubble_sort(std::vector<int>& v);
 void selection_sort(std::vector<int>& v);
 void insertion_sort(std::vector<int>& v);
 void shell_sort(std::vector<int>& v);
+void merge_sort(std::vector<int>& v);
 
 using SortFn = void (*)(std::vector<int>&);
 
@@ -125,5 +126,6 @@ INSTANTIATE_TEST_SUITE_P(
         SortImplementation{"BubbleSort", bubble_sort},
         SortImplementation{"SelectionSort", selection_sort},
         SortImplementation{"InsertionSort", insertion_sort},
-        SortImplementation{"ShellSort", shell_sort}),
+        SortImplementation{"ShellSort", shell_sort},
+        SortImplementation{"MergeSort", merge_sort}),
     ParameterName);
