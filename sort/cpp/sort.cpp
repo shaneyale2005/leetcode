@@ -39,6 +39,7 @@ void selection_sort(std::vector<int> &v) {
 /**
  * 插入排序
  * 核心思想是将当前元素插入到已排序部分的正确位置
+ * 首先 key 作为是待插入的元素，然后 j 作为一个指针，从后往前遍历
  */
 void insertion_sort(std::vector<int> &v) {
     int n = v.size();
