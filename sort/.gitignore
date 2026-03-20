@@ -1,0 +1,56 @@
+# macOS
+.DS_Store
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# C++ / CMake build artifacts
+cpp/build/
+cpp/cmake-build-*/
+cpp/.cache/
+cpp/CMakeFiles/
+cpp/CMakeCache.txt
+cpp/cmake_install.cmake
+cpp/Makefile
+cpp/compile_commands.json
+
+# Native build artifacts
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+*.out
+*.app
+*.dSYM/
+
+# Python caches and local envs
+py/__pycache__/
+py/.ruff_cache/
+py/.pytest_cache/
+py/.mypy_cache/
+py/.cache/
+*.py[cod]
+*.py,cover
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+py/.venv/
+py/venv/
+py/env/
+py/ENV/
+
+# Python packaging artifacts
+py/build/
+py/dist/
+py/*.egg-info/
