@@ -1,7 +1,8 @@
 import unittest
 import random
+from collections import Counter
 
-from sort import bubble_sort, selection_sort
+from sort import bubble_sort, selection_sort, insertion_sort
 
 random.seed(42)
 
@@ -476,6 +477,50 @@ class TestSelectionSort(unittest.TestCase):
         data = original.copy()
         selection_sort(data)
         self.assertEqual(data, sorted(original))
+
+
+class TestInsertionSort(unittest.TestCase):
+    def assert_matches_python_sort(self, nums):
+        data = nums.copy()
+        expected = sorted(nums)
+        insertion_sort(data)
+        self.assertEqual(data, expected, msg=f"input={nums}")
+
+    def test_boundary_and_pattern_cases(self):
+        test_inputs = [
+            [],
+            [42],
+            [1, 2, 3, 4, 5],
+            [5, 4, 3, 2, 1],
+            [3, -1, 2, -1, 3, 0, 2, -5],
+            [0, (2**31) - 1, -1, -(2**31), 42, (2**31) - 1, -(2**31)],
+        ]
+        for case in test_inputs:
+            with self.subTest(input=case):
+                self.assert_matches_python_sort(case)
+
+    def test_preserves_multiset(self):
+        nums = [5, 1, 5, 2, 9, 2, 2, -7, -7, 0]
+        before = Counter(nums)
+        insertion_sort(nums)
+        after = Counter(nums)
+        self.assertEqual(before, after)
+        self.assertEqual(nums, sorted(nums))
+
+    def test_idempotent(self):
+        nums = [4, 1, 3, 2, 3, 1, 0, -2]
+        insertion_sort(nums)
+        once_sorted = nums.copy()
+        insertion_sort(nums)
+        self.assertEqual(nums, once_sorted)
+
+    def test_randomized_against_builtin_sorted(self):
+        rng = random.Random(123456789)
+        for case_id in range(300):
+            size = rng.randint(0, 128)
+            nums = [rng.randint(-1000, 1000) for _ in range(size)]
+            with self.subTest(case_id=case_id):
+                self.assert_matches_python_sort(nums)
 
 
 if __name__ == "__main__":

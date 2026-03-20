@@ -9,6 +9,7 @@
 
 void bubble_sort(std::vector<int>& v);
 void selection_sort(std::vector<int>& v);
+void insertion_sort(std::vector<int>& v);
 
 using SortFn = void (*)(std::vector<int>&);
 
@@ -121,5 +122,6 @@ INSTANTIATE_TEST_SUITE_P(
     SortingAlgorithmsTest,
     ::testing::Values(
         SortImplementation{"BubbleSort", bubble_sort},
-        SortImplementation{"SelectionSort", selection_sort}),
+        SortImplementation{"SelectionSort", selection_sort},
+        SortImplementation{"InsertionSort", insertion_sort}),
     ParameterName);
