@@ -35,6 +35,32 @@ CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 CMakeUserPresets.json
+CMakePresets.json
+
+# Conan generated files
+conan_toolchain.cmake
+conanbuild.sh
+conanrun.sh
+conanbuildenv-*.sh
+conanrunenv-*.sh
+deactivate_conanbuild.sh
+deactivate_conanrun.sh
+conandeps_legacy.cmake
+cmakedeps_macros.cmake
+FindGTest.cmake
+GTestConfig.cmake
+GTestConfigVersion.cmake
+GTestTargets.cmake
+GTest-Target-*.cmake
+GTest-*-data.cmake
+module-GTestTargets.cmake
+module-GTest-Target-*.cmake
+module-GTest-*-data.cmake
+fmt-config.cmake
+fmt-config-version.cmake
+fmtTargets.cmake
+fmt-Target-*.cmake
+fmt-*-data.cmake
 
 # Misc
 *.dSYM/

@@ -3,6 +3,7 @@ set -euo pipefail
 
 CPP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${CPP_DIR}/build"
+CONAN_GENERATORS_DIR="${BUILD_DIR}/conan"
 BUILD_TYPE="${BUILD_TYPE:-Release}"
 CONAN_ENV_NAME="${CONAN_ENV_NAME:-conan}"
 export CONAN_HOME="${CONAN_HOME:-${CPP_DIR}/.conan2}"
@@ -75,12 +76,13 @@ if ! "${CONAN_CMD[@]}" profile path default >/dev/null 2>&1; then
 fi
 
 "${CONAN_CMD[@]}" install "${CPP_DIR}" \
-  --output-folder="${BUILD_DIR}" \
+  --output-folder="${CONAN_GENERATORS_DIR}" \
+  --conf "tools.cmake.cmaketoolchain:user_presets=" \
   --build=missing \
   -s build_type="${BUILD_TYPE}"
 
-cmake -S "${CPP_DIR}" -B "${BUILD_DIR}" \
-  -DCMAKE_TOOLCHAIN_FILE="${BUILD_DIR}/conan_toolchain.cmake" \
+cmake --fresh -S "${CPP_DIR}" -B "${BUILD_DIR}" \
+  -DCMAKE_TOOLCHAIN_FILE="${CONAN_GENERATORS_DIR}/conan_toolchain.cmake" \
   -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
 cmake --build "${BUILD_DIR}"
 "${BUILD_DIR}/test"
