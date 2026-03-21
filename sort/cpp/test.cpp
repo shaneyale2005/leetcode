@@ -7,13 +7,14 @@
 #include <unordered_map>
 #include <vector>
 
-void bubble_sort(std::vector<int>& v);
-void selection_sort(std::vector<int>& v);
-void insertion_sort(std::vector<int>& v);
-void shell_sort(std::vector<int>& v);
-void merge_sort(std::vector<int>& v);
+std::vector<int> bubble_sort(std::vector<int> nums);
+std::vector<int> selection_sort(std::vector<int> nums);
+std::vector<int> insertion_sort(std::vector<int> nums);
+std::vector<int> shell_sort(std::vector<int> nums);
+std::vector<int> merge_sort(std::vector<int> nums);
+std::vector<int> quick_sort(std::vector<int> nums);
 
-using SortFn = void (*)(std::vector<int>&);
+using SortFn = std::vector<int> (*)(std::vector<int>);
 
 struct SortImplementation {
     const char* name;
@@ -29,10 +30,9 @@ std::unordered_map<int, int> BuildFrequencyMap(const std::vector<int>& values) {
 }
 
 void ExpectSortedMatchesStd(const SortImplementation& impl, const std::vector<int>& input) {
-    std::vector<int> actual = input;
     std::vector<int> expected = input;
 
-    impl.fn(actual);
+    std::vector<int> actual = impl.fn(input);
     std::sort(expected.begin(), expected.end());
 
     EXPECT_EQ(actual, expected) << impl.name;
@@ -71,23 +71,30 @@ TEST_P(SortingAlgorithmsTest, PreservesElementMultiset) {
     std::vector<int> input = {5, 1, 5, 2, 9, 2, 2, -7, -7, 0};
 
     const auto before = BuildFrequencyMap(input);
-    impl.fn(input);
-    const auto after = BuildFrequencyMap(input);
+    const std::vector<int> output = impl.fn(input);
+    const auto after = BuildFrequencyMap(output);
 
     EXPECT_EQ(before, after) << impl.name;
-    EXPECT_TRUE(std::is_sorted(input.begin(), input.end())) << impl.name;
+    EXPECT_TRUE(std::is_sorted(output.begin(), output.end())) << impl.name;
 }
 
 TEST_P(SortingAlgorithmsTest, IsIdempotent) {
     const SortImplementation impl = GetParam();
-    std::vector<int> input = {4, 1, 3, 2, 3, 1, 0, -2};
+    const std::vector<int> input = {4, 1, 3, 2, 3, 1, 0, -2};
+    const std::vector<int> once_sorted = impl.fn(input);
+    const std::vector<int> twice_sorted = impl.fn(once_sorted);
 
-    impl.fn(input);
-    const std::vector<int> once_sorted = input;
+    EXPECT_EQ(twice_sorted, once_sorted) << impl.name;
+}
 
-    impl.fn(input);
+TEST_P(SortingAlgorithmsTest, DoesNotModifyInput) {
+    const SortImplementation impl = GetParam();
+    const std::vector<int> input = {9, 4, 1, 7, 3};
+    const std::vector<int> original = input;
 
-    EXPECT_EQ(input, once_sorted) << impl.name;
+    (void)impl.fn(input);
+
+    EXPECT_EQ(input, original) << impl.name;
 }
 
 TEST_P(SortingAlgorithmsTest, RandomizedAgainstStdSort) {
@@ -105,10 +112,9 @@ TEST_P(SortingAlgorithmsTest, RandomizedAgainstStdSort) {
             input.push_back(value_dist(rng));
         }
 
-        std::vector<int> actual = input;
         std::vector<int> expected = input;
 
-        impl.fn(actual);
+        std::vector<int> actual = impl.fn(input);
         std::sort(expected.begin(), expected.end());
 
         EXPECT_EQ(actual, expected) << impl.name << ", case_id=" << case_id;
@@ -127,5 +133,6 @@ INSTANTIATE_TEST_SUITE_P(
         SortImplementation{"SelectionSort", selection_sort},
         SortImplementation{"InsertionSort", insertion_sort},
         SortImplementation{"ShellSort", shell_sort},
-        SortImplementation{"MergeSort", merge_sort}),
+        SortImplementation{"MergeSort", merge_sort},
+        SortImplementation{"QuickSort", quick_sort}),
     ParameterName);
