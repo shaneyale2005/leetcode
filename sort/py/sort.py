@@ -3,6 +3,9 @@ Source code for all kinds of sorting algorithms.
 """
 
 def bubble_sort(nums):
+    """
+    冒泡排序
+    """
     n = len(nums)
     for i in range(n - 1):
         for j in range(n - i - 1):
@@ -10,6 +13,9 @@ def bubble_sort(nums):
                 nums[j], nums[j + 1] = nums[j + 1], nums[j]
 
 def selection_sort(nums):
+    """
+    选择排序
+    """
     n = len(nums)
     for i in range(n - 1):
         min_idx = i
@@ -21,6 +27,9 @@ def selection_sort(nums):
     return nums
 
 def insertion_sort(nums):
+    """
+    插入排序
+    """
     n = len(nums)
     for i in range(1, n):
         key = nums[i]
@@ -32,6 +41,9 @@ def insertion_sort(nums):
     return nums
 
 def shell_sort(nums):
+    """
+    希尔排序
+    """
     n = len(nums)
     gap = n // 2
     while gap > 0:
@@ -71,3 +83,16 @@ def merge_sort(nums):
         return res + left[i:] + right[j:]
 
     return merge(left, right)
+
+def quick_sort(nums):
+    """
+    快速排序
+    """
+    n = len(nums)
+    if n <= 1:
+        return nums
+    pivot = nums[n // 2]
+    left = [x for x in nums if x < pivot]
+    middle = [x for x in nums if x == pivot]
+    right = [x for x in nums if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
