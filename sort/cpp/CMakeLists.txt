@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(GTest CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 add_executable(test
     sort.cpp
@@ -14,4 +15,5 @@ add_executable(test
 target_link_libraries(test
     GTest::gtest
     GTest::gtest_main
+    fmt::fmt
 )
