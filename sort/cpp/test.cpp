@@ -13,6 +13,7 @@ std::vector<int> insertion_sort(std::vector<int> nums);
 std::vector<int> shell_sort(std::vector<int> nums);
 std::vector<int> merge_sort(std::vector<int> nums);
 std::vector<int> quick_sort(std::vector<int> nums);
+std::vector<int> heap_sort(std::vector<int> nums);
 
 using SortFn = std::vector<int> (*)(std::vector<int>);
 
@@ -134,5 +135,6 @@ INSTANTIATE_TEST_SUITE_P(
         SortImplementation{"InsertionSort", insertion_sort},
         SortImplementation{"ShellSort", shell_sort},
         SortImplementation{"MergeSort", merge_sort},
-        SortImplementation{"QuickSort", quick_sort}),
+        SortImplementation{"QuickSort", quick_sort},
+        SortImplementation{"HeapSort", heap_sort}),
     ParameterName);

@@ -1,6 +1,5 @@
-#include <vector>
-#include <iostream>
 #include <algorithm>
+#include <vector>
 
 /**
  * 冒泡排序
@@ -112,4 +111,40 @@ std::vector<int> quick_sort(std::vector<int> nums) {
     left.insert(left.end(), middle.begin(), middle.end());
     left.insert(left.end(), right.begin(), right.end());
     return left;
+}
+
+
+std::vector<int> heap_sort(std::vector<int> nums) {
+    auto sift_down = [&nums](int root, int heap_size) {
+        while (true) {
+            int left = 2 * root + 1;
+            int right = left + 1;
+            int largest = root;
+
+            if (left < heap_size && nums[left] > nums[largest]) {
+                largest = left;
+            }
+            if (right < heap_size && nums[right] > nums[largest]) {
+                largest = right;
+            }
+            if (largest == root) {
+                return;
+            }
+
+            std::swap(nums[root], nums[largest]);
+            root = largest;
+        }
+    };
+
+    int n = nums.size();
+    for (int i = n / 2 - 1; i >= 0; --i) {
+        sift_down(i, n);
+    }
+
+    for (int end = n - 1; end > 0; --end) {
+        std::swap(nums[0], nums[end]);
+        sift_down(0, end);
+    }
+
+    return nums;
 }
