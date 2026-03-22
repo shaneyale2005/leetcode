@@ -96,3 +96,28 @@ def quick_sort(nums):
     middle = [x for x in nums if x == pivot]
     right = [x for x in nums if x > pivot]
     return quick_sort(left) + middle + quick_sort(right)
+
+def heap_sort(nums):
+    """
+    堆排序
+    """
+    n = len(nums)
+    for i in range(n // 2 - 1, -1, -1):
+        j = i
+        while 1:
+            l, r, largest = 2 * j + 1, 2 * j + 2, j
+            if l < n and nums[l] > nums[largest]: largest = l
+            if r < n and nums[r] > nums[largest]: largest = r
+            if largest == j: break
+            nums[j], nums[largest] = nums[largest], nums[j]; j = largest
+
+    for end in range(n - 1, 0, -1):
+        nums[0], nums[end] = nums[end], nums[0]; j = 0
+        while 1:
+            l, r, largest = 2 * j + 1, 2 * j + 2, j
+            if l < end and nums[l] > nums[largest]: largest = l
+            if r < end and nums[r] > nums[largest]: largest = r
+            if largest == j: break
+
+            nums[j], nums[largest] = nums[largest], nums[j]; j = largest
+    return nums
